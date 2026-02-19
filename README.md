@@ -4,14 +4,10 @@ Version history like in Google Docs. Don't worry about Git. Claude Code will.
 
 ## Install
 
-```bash
-claude plugin install googly-versions@googly-versions-marketplace
+In Claude Code, run:
+
 ```
-
-Or use directly:
-
-```bash
-claude --plugin-dir ~/git/googly-versions
+/plugin install googly-versions
 ```
 
 ## Usage

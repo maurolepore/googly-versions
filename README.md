@@ -7,7 +7,8 @@ Version history like in Google Docs. Don't worry about Git. Claude Code will.
 In Claude Code, run:
 
 ```
-/plugin install googly-versions
+/plugin marketplace add maurolepore/googly-versions
+/plugin install googly-versions@googly-versions-marketplace
 ```
 
 ## Usage

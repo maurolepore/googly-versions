@@ -8,6 +8,9 @@ In Claude Code, run:
 
 ```
 /plugin marketplace add maurolepore/googly-versions
+```
+
+```
 /plugin install googly-versions@googly-versions-marketplace
 ```
 

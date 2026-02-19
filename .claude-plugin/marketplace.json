@@ -1,0 +1,22 @@
+{
+  "name": "googly-versions-marketplace",
+  "owner": {
+    "name": "Mauro Lepore",
+    "email": "maurolepore@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "googly-versions",
+      "source": "./",
+      "description": "Google-like version history with a Git backend",
+      "version": "0.1.0",
+      "author": {
+        "name": "Mauro Lepore"
+      },
+      "repository": "https://github.com/maurolepore/googly-versions",
+      "license": "MIT",
+      "keywords": ["version-history", "autosave", "git"],
+      "category": "productivity"
+    }
+  ]
+}

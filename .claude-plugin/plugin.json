@@ -1,0 +1,14 @@
+{
+  "name": "googly-versions",
+  "version": "0.1.0",
+  "description": "Google-like version history with a Git backend",
+  "author": {
+    "name": "Mauro Lepore",
+    "url": "https://github.com/maurolepore"
+  },
+  "repository": "https://github.com/maurolepore/googly-versions",
+  "license": "MIT",
+  "keywords": ["version-history", "autosave", "git"],
+  "skills": "./skills/",
+  "hooks": "./hooks/hooks.json"
+}

@@ -22,7 +22,7 @@ cd "$DIR"
 if ! git rev-parse --is-inside-work-tree &>/dev/null; then
   [[ "$PWD" == "$HOME" || "$PWD" == "/" ]] && exit 0
   git init || exit 0
-  [[ -f .gitignore ]] || printf '.env\n.DS_Store\nThumbs.db\nnode_modules/\n*.tmp\n' > .gitignore
+  [[ -f .gitignore ]] || printf '.env\n.env.*\n.secret\n*.pem\n*.key\n*.p12\n*.pfx\ncredentials.json\nservice-account*.json\n.DS_Store\nThumbs.db\nnode_modules/\n*.tmp\n' > .gitignore
   git add -A && git -c user.name="Auto-save" -c user.email="auto-save@local" \
     commit -m "[auto] Initial version" --allow-empty
   exit 0

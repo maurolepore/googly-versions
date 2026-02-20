@@ -30,21 +30,23 @@ if [[ -n "$(git status --porcelain 2>/dev/null)" ]]; then
   STASHED=true
 fi
 
-# Restore stash on any error
-cleanup() { $STASHED && git stash pop -q 2>/dev/null; }
+# Restore stash on exit (success or failure)
+cleanup() {
+  if $STASHED; then
+    git stash pop -q || echo "Warning: stash pop failed — your changes are still in 'git stash list'." >&2
+  fi
+}
 trap cleanup EXIT
 
-# Parent of the oldest consecutive [auto] commit
+# Squash: soft reset (or delete HEAD if all are [auto]), then recommit
 if [[ "$COUNT" -eq "$TOTAL" ]]; then
-  # All commits are [auto] — squash to a single root commit
   git update-ref -d HEAD
-  git -c user.name="Auto-save" -c user.email="auto-save@local" \
-    commit -m "[auto] $NEWEST_TS"
 else
   TARGET=$(git rev-parse "HEAD~${COUNT}")
   git reset --soft "$TARGET"
-  git -c user.name="Auto-save" -c user.email="auto-save@local" \
-    commit -m "[auto] $NEWEST_TS"
 fi
+
+git -c user.name="Auto-save" -c user.email="auto-save@local" \
+  commit -m "[auto] $NEWEST_TS"
 
 echo "Squashed $COUNT versions into 1."

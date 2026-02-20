@@ -2,7 +2,8 @@
 name: googly-versions
 description: Google-like version history with a Git backend. Use when the user
   says "versions", "version history", "name this version", "rename version", "show versions",
-  "go back", "restore", "undo", "make a copy", "autosave on/off", or "turn on/off autosave".
+  "go back", "restore", "undo", "make a copy", "autosave on/off", "turn on/off autosave",
+  "squash autosaves", or "squash consecutive autosaves".
 allowed-tools: [Bash, Read]
 ---
 
@@ -89,3 +90,8 @@ Say: "Auto-save off. Your version history is still here — say 'autosave on' to
 
 Run: `${CLAUDE_PLUGIN_ROOT}/bin/versions-autosave.sh on`
 Say: "Auto-save on."
+
+## "squash autosaves" / "squash consecutive autosaves"
+
+Run: `${CLAUDE_PLUGIN_ROOT}/bin/versions-squash-autosaves.sh`
+Show the result to the user.

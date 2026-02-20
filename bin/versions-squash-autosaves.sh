@@ -7,9 +7,10 @@ set -euo pipefail
 cd "$(git rev-parse --show-toplevel)"
 
 # Count consecutive [auto] commits from HEAD
+TOTAL=$(git rev-list --count HEAD)
 COUNT=0
-while true; do
-  SUBJECT=$(git log -1 --skip="$COUNT" --pretty=format:"%s" 2>/dev/null) || break
+while [[ "$COUNT" -lt "$TOTAL" ]]; do
+  SUBJECT=$(git log -1 --skip="$COUNT" --pretty=format:"%s") || break
   [[ "$SUBJECT" == "[auto]"* ]] || break
   COUNT=$((COUNT + 1))
 done
@@ -22,9 +23,6 @@ fi
 # Get timestamp of newest [auto] (HEAD)
 NEWEST_TS=$(git log -1 --pretty=format:"%ad" --date=format:"%Y-%m-%d %H:%M:%S")
 
-# Parent of the oldest consecutive [auto] commit
-TARGET=$(git rev-parse "HEAD~${COUNT}")
-
 # Stash uncommitted changes if any
 STASHED=false
 if [[ -n "$(git status --porcelain 2>/dev/null)" ]]; then
@@ -32,14 +30,21 @@ if [[ -n "$(git status --porcelain 2>/dev/null)" ]]; then
   STASHED=true
 fi
 
-# Squash: soft reset then recommit
-git reset --soft "$TARGET"
-git -c user.name="Auto-save" -c user.email="auto-save@local" \
-  commit -m "[auto] $NEWEST_TS"
+# Restore stash on any error
+cleanup() { $STASHED && git stash pop -q 2>/dev/null; }
+trap cleanup EXIT
 
-# Restore stash if needed
-if $STASHED; then
-  git stash pop -q
+# Parent of the oldest consecutive [auto] commit
+if [[ "$COUNT" -eq "$TOTAL" ]]; then
+  # All commits are [auto] — squash to a single root commit
+  git update-ref -d HEAD
+  git -c user.name="Auto-save" -c user.email="auto-save@local" \
+    commit -m "[auto] $NEWEST_TS"
+else
+  TARGET=$(git rev-parse "HEAD~${COUNT}")
+  git reset --soft "$TARGET"
+  git -c user.name="Auto-save" -c user.email="auto-save@local" \
+    commit -m "[auto] $NEWEST_TS"
 fi
 
 echo "Squashed $COUNT versions into 1."

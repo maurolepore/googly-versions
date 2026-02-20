@@ -94,4 +94,5 @@ Say: "Auto-save on."
 ## "squash autosaves" / "squash consecutive autosaves"
 
 Run: `${CLAUDE_PLUGIN_ROOT}/bin/versions-squash-autosaves.sh`
-Show the result to the user.
+- On success: show the result to the user.
+- On failure (exit 1): tell the user the squash couldn't be completed.

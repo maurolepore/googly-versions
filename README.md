@@ -31,6 +31,7 @@ Versions automatically saves your work every time Claude stops. To toggle:
 
 - **"autosave off"** — pause auto-saving
 - **"autosave on"** — resume auto-saving
+- **"squash autosaves"** — collapse consecutive autosaves into one
 
 Your version history is preserved even when autosave is off.
 
